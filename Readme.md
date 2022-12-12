@@ -21,8 +21,6 @@ Wind tunnel design to run!
 Wind tunnel design to git!
 Wind tunnel design to reuse!
 
-## Kotlin toolbox for DSL implementation
-How Kotlin utilities help to implement a DSL will definitely affect the way we design the DSL.
 
 ## Domain analysis
 Wind tunnel design results are geometric definitions fo a tunnel circuit, where wind tunnel components are defined, the geometric parameters are specified for each components, the connection relationship between components is defined. For all the operational conditions, the performance of the tunnel circuit and components will be prodicted to specified design requirements of the fan/compressor. At some point, the fan map wille be presented as the start point to design the fan. At the first design phase, the aerodynamic design of the fan will not be included.
@@ -43,6 +41,7 @@ Perimeter and area are as follows:
 $$
 C = \int_{\partial\Omega} ds
 $$
+where $s$ denotes the arc length on the curve $\partial\Omega$, starting and ending at any arbitrary point on $\partial\Omega$.
 
 $$
 A = \int_\Omega dxdy
@@ -52,7 +51,7 @@ $$
 D = \frac{4A}{C}
 $$
 
-For any intersection, a two dimensional shape can be defined as the flow area. For the concern of wind tunnel design, the area of the shape, the hydraulic diameter are the two things that matter. 
+For any intersection, a two dimensional shape can be defined as the flow area, usually circle, rectangle, square, or octagon (often referred as cutted rectangle). For the concern of wind tunnel design, the area of the shape, the hydraulic diameter are the two things that matter. 
 
 Only when we consider the pressure loss of pipe component, actual shape of intersection do matters, where a shape coefficient can be defined to express anomolic feature that the shape can affect energy loss when flow through the intersection.
 
@@ -108,7 +107,41 @@ Usually, the fan map is series of $\Delta P ~\mathrm{v.s.}~ \dot{m}$ for differe
 And $\eta_i$ to normalize loss $\hat{\eta}_i$.
 
 
+## DSL abstract design and concrete design
 
+### syntax
+The syntax for describes a wind tunnel aerodynamic design consists of several different parts. 
+1. wind tunnel definitions
+   1. components geometric definitions
+      1. connection relationship definitions
+      2. profile definitions
+      3. intersection definitions
+   2. Operational definitions
+      1. operational envolop
+      2. design points definitions
+      3. experiments frequencies
+   3. Performance definitions
+      1. component pressure loss
+      2. test section flow uniformity
+      3. fan map generation
+
+
+### semantics
+
+
+
+## Kotlin toolbox for DSL implementation
+How Kotlin utilities help to implement a DSL will definitely affect the way we design the DSL.
+
+### function as parameter and syntax sugar
+
+### extension function 
+
+### operator overload
+
+### infix function
+
+### Other facilities
 
 ## User Manual
 
