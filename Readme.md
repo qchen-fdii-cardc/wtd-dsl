@@ -21,6 +21,17 @@ Wind tunnel design to run!
 Wind tunnel design to git!
 Wind tunnel design to reuse!
 
+## Kotlin toolbox for DSL implementation
+How Kotlin utilities help to implement a DSL will definitely affect the way we design the DSL.
+
+## Domain analysis
+Wind tunnel design results are geometric definitions fo a tunnel circuit, where wind tunnel components are defined, the geometric parameters are specified for each components, the connection relationship between components is defined. For all the operational conditions, the performance of the tunnel circuit and components will be prodicted to specified design requirements of the fan/compressor. At some point, the fan map wille be presented as the start point to design the fan. At the first design phase, the aerodynamic design of the fan will not be included.
+
+But fan map must be specified with the design of the circuit.
+
+
+
+
 
 ## User Manual
 
