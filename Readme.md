@@ -104,7 +104,21 @@ Usually, the fan map is series of $\Delta P ~\mathrm{v.s.}~ \dot{m}$ for differe
 
 
 ### loss coefficients
-And $\eta_i$ to normalize loss $\hat{\eta}_i$.
+And $\eta_i$ to normalize loss $\hat{\eta}_i$ .
+$$
+\eta_i = \frac{\Delta P}{\frac{1}{2}\rho v^2}
+$$
+Normalized loss coefficients are normalized by dynamic pressure at the test section:
+$$
+\hat{\eta}_i = \frac{\Delta P}{\frac{1}{2}\rho_tv_t^2}
+$$
+By continuous equation:
+$$
+\rho_i v_i A_i = \rho_t v_t A_t
+$$
+
+
+
 
 
 ## DSL abstract design and concrete design
@@ -134,6 +148,27 @@ The syntax for describes a wind tunnel aerodynamic design consists of several di
 How Kotlin utilities help to implement a DSL will definitely affect the way we design the DSL.
 
 ### function as parameter and syntax sugar
+
+First check `with` and `apply` in kotlin stdlib.
+```kotlin
+public inline fun <T, R> with(receiver: T, block: T.() -> R): R{
+    contract{
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    return receiver.block()
+}
+```
+
+```kotlin
+public inline fun<T> T.apply(block: T.()->Unit): T {
+    contract{
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    block()
+    return this
+}
+```
+
 
 ### extension function 
 
