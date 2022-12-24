@@ -75,11 +75,27 @@ C --> E(Fan/Compressor operation map) --> F[Pressure loss of components] --> D
 B ----> D(Components geometric parameters) --> AP[[Aerodynamic design]]
 PI(Performance) ---> PIA(Operational envolop) --> F
 PI --> PIB(FLow Uniformity in testsection) ---> D
-PI ------> ef[[Process design]]
+PI ---> xx(Efficiency)----> ef[[Process design]]
 PC(Performance/cost ratio) --> A
 PC --> PI
 ```
 <div align='center' style="font-size:16px;font-weight:bold;">Fig. 1  Wind tunnel Design Drivers to Aerodynamic Design</div>
+
+```mermaid
+graph TD
+A(成本) --> C(运行成本) 
+A --> B(建设成本)
+B --> E
+C -----> KK[[试验设计]]
+C --> E(风扇图谱) --> F[部段损失] --> D
+B ----> D(回路几何) --> AP[[气动设计]]
+PI(性能) ---> PIA(运行包线) --> F
+PI --> PIB(流场品质) ---> D
+PI ---> xx(试验效率)----> ef[[过程设计]]
+PC(效费比) --> A
+PC --> PI
+```
+<div align='center' style="font-size:16px;font-weight:bold;">Fig. 1  驱动低速风洞气动设计的因素影响关系</div>
 
 As Fig. 1 describes, the aerodynamic design represents as components in the circuit and geometric parameters defined. From circuit laytouts and parameters of components, mechanmical engineers can estimate the one-time construction cost; aerodynamists can estimate the pressure loss of all components and flow uniformity in the test section.
 From pressure loss, aerodynamists can estimate the operational envolop ot the tunnel, and design fan map. The latter leads to continuous runtime cost of the tunnel, combined with experiments design. While operational envolop and flow quality consists the performance of a wind tunnel, one-time construction cost and continuous runtime cost consists the total cost of the tunnel. 
@@ -102,21 +118,50 @@ Usually, the fan map is series of $\Delta P ~\mathrm{v.s.}~ \dot{m}$ for differe
 ![Fan map example](resources/42-Illustration-of-fan-performance-curve.ppm)
 <div align='center' style="font-size:16px;font-weight:bold;">Fig. 2  Fan performance map example[1] </div>
 
+For wind tunnels, fan work on flow can be expressed as a function of mass flow rate and pressure rise:
+$$
+\begin{array}{ll}
+W&= Q \cdot \Delta P \\
+&= \rho_t v_t A_t \cdot \varepsilon_T \frac{1}{2} \rho_t v_t^2 \\
+&= \frac{1}{2} \rho_t^2 v_t^3 A_t \varepsilon_T \\
+&= \frac{1}{2} \rho_t^2 \left(\frac{Q}{\rho_t A_t}\right)^3A_t\varepsilon_T \\
+&= \frac{1}{2} \frac{\varepsilon_T}{\rho_t^2 A_t^2}  Q^3    
+\end{array}
+$$
+
+$$
+\begin{array}{ll}
+\Delta P &= \varepsilon_T \frac{1}{2} \rho_t v_t^2 \\
+    &=0.5\varepsilon_T \rho_t \frac{Q^2}{\rho_t^2 A_t^2}\\
+    &=\varepsilon_T \frac{1}{2\rho_t A_t^2} Q^2
+\end{array}
+$$
+
+Total pressure loss coefficient $\varepsilon_T$, density and velocity in the test section  define designed curve in the fan map. 
+
 
 ### loss coefficients
-And $\eta_i$ to normalize loss $\hat{\eta}_i$ .
+And $\varepsilon_i$ to normalize loss $\hat{\varepsilon}_i$ .
 $$
-\eta_i = \frac{\Delta P}{\frac{1}{2}\rho v^2}
+\varepsilon_i = \frac{\Delta P_i}{\frac{1}{2}\rho v^2}
 $$
 Normalized loss coefficients are normalized by dynamic pressure at the test section:
 $$
-\hat{\eta}_i = \frac{\Delta P}{\frac{1}{2}\rho_tv_t^2}
+\hat{\varepsilon}_i = \frac{\Delta P_i}{\frac{1}{2}\rho_tv_t^2}
 $$
 By continuous equation:
 $$
 \rho_i v_i A_i = \rho_t v_t A_t
 $$
+For the whole circuit, the loss coefficients is:
+$$
+\varepsilon_T = \sum_i{\hat{\varepsilon_i}}
+$$
 
+Total pressure loss is 
+$$
+\Delta P_T = \frac{1}{2}\rho_tv_t^2 \cdot \varepsilon_T
+$$
 
 
 
