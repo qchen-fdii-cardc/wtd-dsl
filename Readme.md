@@ -115,7 +115,7 @@ This is one of the main production of aerodynamic design.
 
 Usually, the fan map is series of $\Delta P ~\mathrm{v.s.}~ \dot{m}$ for different parameter combinations. As Fig.2 shows, a series of red curves show the operational parameters with predefined roational speed (RPM). The solid black curve is the maximum pressure points with given RPMs. Usually, this will be the design curve of the wind tunnel. And a series of dashed curves show the $\Delta P ~\mathrm{v.s.}~ \dot{m}$  relationship with given power input. This performance map contains all the information needed to carry out aerodynamic design.
 
-![Fan map example](resources/42-Illustration-of-fan-performance-curve.ppm)
+![Fan map example](resources/42-Illustration-of-fan-performance-curve.png)
 <div align='center' style="font-size:16px;font-weight:bold;">Fig. 2  Fan performance map example[1] </div>
 
 For wind tunnels, fan work on flow can be expressed as a function of mass flow rate and pressure rise:
