@@ -230,7 +230,12 @@ Define wind tunnel aerodynamic design with kotlin as follows:
 
 ```kotlin
 windtunnel("0.5m teaching wind tunnel") {
-    testsection("#1")  {}
+    testsection("#1")  {
+        length = 3.0
+        profile {
+            
+        }
+    }
 
     diffuser("#1 diffuser") {}
 
