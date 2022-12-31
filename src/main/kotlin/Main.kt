@@ -31,6 +31,8 @@ fun main(args: Array<String>) {
     println("Tony".asUser()?.address)
 
 
+    val s = "Phone "+ "Kill"
+
 }
 // data class representing domain objects
 data class Address(

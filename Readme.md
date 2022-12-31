@@ -185,12 +185,152 @@ The syntax for describes a wind tunnel aerodynamic design consists of several di
       3. fan map generation
 
 
+#### Design 
+
+1. All entities (Windtunnel, components, profile, intersection) are identified by string names.
+2. Descriptive vocabularies are used to record the design of entities.
+3. Mathematical declarations of geometries are used with definition of numerical variables.
+4. Unique formal declarations can be generated for comparisons and storages.
+5. Performance indexes can be generated for geometrical description.
+6. Variables are sweepable.
+7. Variables are optimizable.
+
+
+##### Entity hierarchy
+
+```mermaid
+graph TD
+A(Wind tunnel) --- B(Component)
+B --- C(Profile) --- D(Intersection) --- E(Variable)
+
+```
+
+```kotlin
+variable "tsl" length meter
+variable "d" length meter
+variable "vts" velocity mps
+variable "p0" pressure pa
+variable "rho0" density kgpmc
+
+windtunnel name "0.3mx0.3m low speed teaching wind tunnel" shorthand "0.3m lstwt"
+windtunnel name "0.3m lstwt" cc "0.3m test section" shorthand "ts#1"
+cc name "ts#1" length varialbe "tsl"
+cc name "ts#1" profile {
+    rectangle width 0.3 height 0.4
+}
+windtunnel name "0.3m lstwt" cc "diffuser #1"
+cc name "diffuser #1" length 6.0.meters
+cc name "diffuser #1" profile {
+    rectangle width 0.3 height 0.4 + 0.1 * it / 6.0
+}
+
+cc name "ts#1" + cc name "diffuser #1"
+
+```
+
+```mermaid
+classDiagram
+
+class WindTunnel {
+    +List~CircutComponent~ components
+    +bool isCloseLoop
+    +String name
+    +totalLossCoefficient() Double
+    +upstream(c: CircutComponent) CircutComponent
+    +downstream(c: CircutComponent) CircutComponent   
+}
+```
+```mermaid
+classDiagram
+class CircuitComponent{
+    +String name
+    -CircutComponent upstream
+    -CircutComponent downstream
+    +Profile profile
+    +localLossCoefficient(massflowrate: Double) Double
+}
+```
+```mermaid
+classDiagram
+class Profile{
+    +String name
+    +Variable length
+    +intersection(x: Double) Shape
+}
+```
+```mermaid
+classDiagram
+
+Shape <|-- Circle
+Rectangle <|-- Square
+Shape <|-- CuttedRectangle
+CuttedRectangle <|-- Rectangle
+class Shape {
+    +Variable hydraulicDiameter
+    +perimeter()* Double
+    +area()* Double
+}
+
+```
+
+```mermaid
+classDiagram
+class Variable{
+    +String name
+    +Double lb
+    +Double ub
+    +Double value
+    +sweep(lb:Double, ub:Double, n:Integer)
+}
+```
+
+
+
 ### semantics
 
 
 
 ## Kotlin toolbox for DSL implementation
 How Kotlin utilities help to implement a DSL will definitely affect the way we design the DSL.
+
+1. Exploit the power of Kotlin to create fluent code
+2. Extend the vocabulary of the APIs bring in domain-specific code
+3. Program implicit context so the DSLs are concise and easy to work with
+4. Manage the scope of calls and handle errors gracefully
+
+### Exploit Fluency
+```kotlin
+object fetch {
+    infix fun balance(number: Int) = println("Fetch the balance for $number")
+}
+```
+This code make `fetch balance 12345` legitimate code.
+
+Implementing infix functions with more than two arguments.
+```kotlin
+enum class Message {
+    StatementReady,
+    LowBalanceAlert;
+
+    infix fun to(number: Int) = println("sending message $this to $number")
+}
+
+object send {
+    infix fun message(messageId: Message) = messageId
+}
+
+send message StatementReady to 123456
+```
+
+Make programming easier with plain grammar like this:
+```kotlin
+account number 123455 withdraw 1000
+account number 12345 deposit 1000
+```
+
+The benifits of using Kotlin to implement the above syntax are: 1) the script or program will contain minimum extra programming flavor to let domain engineers write code more comfortablelly and confidently, 2) the above natural language script is totally legitimate Kotlin code, so current full-feature IDE can or LSP can be used to check the validity of DSL program.
+
+
 
 ### function as parameter and syntax sugar
 
