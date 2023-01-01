@@ -231,15 +231,14 @@ cc name "ts#1" + cc name "diffuser #1"
 ```mermaid
 classDiagram
 
-class WindTunnel {
+class WindTunnelCircuit {
     +List~CircutComponent~ components
     +bool isCloseLoop
     +String name
     +totalLossCoefficient() Double
     +upstream(c: CircutComponent) CircutComponent
     +downstream(c: CircutComponent) CircutComponent   
-    +testsections() List~CircutComponent~
-    +circuits() List~CircutComponent~
+    +testsection() TestSection
 }
 ```
 ```mermaid
@@ -251,6 +250,16 @@ class CircuitComponent{
     +Profile profile
     +localLossCoefficient(massflowrate: Double) Double
 }
+CircuitComponent <|-- TestSection
+CircuitComponent <|-- Diffuser
+CircuitComponent <|-- Corner
+CircuitComponent <|-- Backleg
+CircuitComponent <|-- HeatExchanger
+CircuitComponent <|-- Fan
+CircuitComponent <|-- SettlingChamber
+CircuitComponent <|-- Contraction
+CircuitComponent <|-- SecondThroat
+CircuitComponent <|-- Reentry
 ```
 ```mermaid
 classDiagram
@@ -259,6 +268,9 @@ class Profile{
     +Variable length
     +intersection(x: Double) Shape
 }
+Profile <|-- LinearProfile
+Profile <|-- CurveProfile
+Profile <|-- TransitionProfile
 ```
 ```mermaid
 classDiagram
