@@ -206,15 +206,15 @@ B --- C(Profile) --- D(Intersection) --- E(Variable)
 ```
 
 ```kotlin
-variable "tsl" length meter
-variable "d" length meter
-variable "vts" velocity mps
-variable "p0" pressure pa
-variable "rho0" density kgpmc
+variable name "tsl" length meter
+variable name "d" length meter
+variable name "vts" velocity mps
+variable name "p0" pressure pa
+variable name "rho0" density kgpmc
 
 windtunnel name "0.3mx0.3m low speed teaching wind tunnel" shorthand "0.3m lstwt"
 windtunnel name "0.3m lstwt" cc "0.3m test section" shorthand "ts#1"
-cc name "ts#1" length varialbe "tsl"
+cc name "ts#1" length varialbe name "tsl"
 cc name "ts#1" profile {
     rectangle width 0.3 height 0.4
 }
@@ -238,6 +238,8 @@ class WindTunnel {
     +totalLossCoefficient() Double
     +upstream(c: CircutComponent) CircutComponent
     +downstream(c: CircutComponent) CircutComponent   
+    +testsections() List~CircutComponent~
+    +circuits() List~CircutComponent~
 }
 ```
 ```mermaid
@@ -265,10 +267,36 @@ Shape <|-- Circle
 Rectangle <|-- Square
 Shape <|-- CuttedRectangle
 CuttedRectangle <|-- Rectangle
+Shape <|-- RectangleCircleTransitSection
 class Shape {
     +Variable hydraulicDiameter
     +perimeter()* Double
     +area()* Double
+}
+class RectangleCircleTransitSection{
+    +Double radius
+    +Double cutSquareSide
+    +perimeter() Double
+    +area() Double
+}
+class Circle {
+    +Double radius
+    +perimeter() Double
+    +area() Double
+}
+class CuttedRectangle {
+    +Double weight
+    +Double height
+    +Double cw
+    +Double ch
+    +perimeter() Double
+    +area() Double
+}
+class Rectangle {
+    +CuttedRectangle(weight, height, 0, 0)
+}
+class Square{
+    +Rectangle(d, d)
 }
 
 ```
